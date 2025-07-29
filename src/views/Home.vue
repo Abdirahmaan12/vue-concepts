@@ -73,7 +73,7 @@
         <li
           v-for="(user, index) in filteredUsers"
           :key="index"
-          class=" bg-blue-600 text-white p-3 rounded-lg shadow"
+          class=" bg-blue-900 text-white p-3 rounded-lg shadow"
         >
           {{ user.name }} – {{ user.age }} sano jir
         </li>
