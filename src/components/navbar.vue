@@ -46,6 +46,9 @@ export default {
         { label: "RegisterView", to: "/RegisterView", icon: "🏠" },
         { label: "BaseCard", to: "/BaseCard", icon: "📝" },
         { label: "DynamicTabs", to: "/DynamicTabs", icon: "⚙️" },
+        { label: "Datepicker", to: "/Datepicker", icon: "⚙️" },
+        { label: "tables", to: "/tables", icon: "💻" },
+
       ])
     },
 
