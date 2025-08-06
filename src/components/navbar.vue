@@ -1,27 +1,69 @@
 <template>
-  <nav class="bg-pink-200 text-gray-800 shadow h-[60px] px-6 flex items-center justify-between rounded-md">
-    <!-- Left side -->
-    <div class="flex items-center space-x-4">
-      <h1 class="font-bold text-xl">{{ title }}</h1>
-      <router-link
-        v-for="(item, index) in links"
-        :key="index"
-        :to="item.to"
-        class="p-2 rounded hover:bg-red-800/10 transition text-[20px]"
+  <nav
+    class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-between px-6 h-14 shadow-md dark:shadow-lg text-gray-800 dark:text-white transition-colors duration-300 ease-in-out"
+  >
+    <div class="flex items-center gap-3">
+      <!-- Hamburger for mobile -->
+      <button
+        @click="$emit('toggle-sidebar')"
+        class="md:hidden p-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
       >
-        {{ item.icon }} {{ item.label }}
-      </router-link>
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <!-- Title -->
+      <h1
+        class="font-bold text-base sm:text-[18px] md:text-[20px] lg:text-[22px]"
+      >
+        {{ title }}
+      </h1>
     </div>
 
-    <!-- Right side -->
-    <div class="flex items-center space-x-4">
-      <span>👋 Welcome, {{ username }}</span>
+    <!-- Right Buttons -->
+    <div class="flex items-center gap-4">
+      <!-- Dark Mode -->
       <button
-        class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
-        @click="logout"
+        @click="toggleDarkMode"
+        class="p-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
       >
-        Logout
+        <i class="fa-solid fa-moon" v-if="!isDark"></i>
+        <i class="fa-solid fa-sun text-yellow-400" v-else></i>
       </button>
+
+      <!-- Fullscreen -->
+      <button
+        @click="toggleFullscreen"
+        class="p-2 rounded hover:bg-gray-300 dark:hover:bg-gray-700"
+      >
+        <i
+          :class="isFullscreen ? 'fa-solid fa-minimize' : 'fa-solid fa-expand'"
+        ></i>
+      </button>
+
+      <!-- Logout -->
+
+      <div class="relative inline-block">
+        <!-- Profile Picture -->
+        <img
+          src="../assets/logo.jpeg"
+          alt="Profile"
+          class="mr-4 w-9 h-9 rounded-full border-2 border-[#2d527c] object-cover cursor-pointer"
+          @click="toggleMenu"
+        />
+
+        <!-- Dropdown -->
+        <div
+          v-if="menuOpen"
+          class="absolute right-0 mt-2 w-32 bg-white dark:bg-gray-800 shadow-lg rounded-lg transition-all duration-300"
+        >
+          <button
+            @click="logout"
+            class="flex items-center gap-2 w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200"
+          >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+          </button>
+        </div>
+      </div>
     </div>
   </nav>
 </template>
@@ -32,35 +74,63 @@ export default {
   props: {
     title: {
       type: String,
-      default: "🌐 Vue concepts"
+      default: "🌐 Vue",
     },
-    username: {
-      type: String,
-      default: "Samafale"
-    },
-    links: {
-      type: Array,
-      default: () => ([
-         { label: "Home", to: "/Home", icon: "🏠" },
-        { label: "input", to: "/input", icon: "🏠" },
-        { label: "RegisterView", to: "/RegisterView", icon: "🏠" },
-        { label: "BaseCard", to: "/BaseCard", icon: "📝" },
-        { label: "DynamicTabs", to: "/DynamicTabs", icon: "⚙️" },
-        { label: "Datepicker", to: "/Datepicker", icon: "⚙️" },
-        { label: "tables", to: "/tables", icon: "💻" },
-
-      ])
-    },
-
-   
   },
-
+  data() {
+    return {
+      menuOpen: false,
+      isDark: false,
+      isFullscreen: false,
+    };
+  },
+  mounted() {
+    if (localStorage.theme === "dark") {
+      document.documentElement.classList.add("dark");
+      this.isDark = true;
+    }
+    document.addEventListener("fullscreenchange", this.onFullscreenChange);
+  },
+  beforeUnmount() {
+    document.removeEventListener("fullscreenchange", this.onFullscreenChange);
+  },
   methods: {
-  logout() {
-    // alert("hello")
-      this.$router.push('/login');
+    logout() {
+      this.$router.push("/login");
+    },
 
-  }
-}
-}
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    },
+    
+    toggleDarkMode() {
+      this.isDark = !this.isDark;
+      if (this.isDark) {
+        document.documentElement.classList.add("dark");
+        localStorage.theme = "dark";
+      } else {
+        document.documentElement.classList.remove("dark");
+        localStorage.theme = "light";
+      }
+    },
+    async toggleFullscreen() {
+      try {
+        if (!this.isFullscreen) {
+          await document.documentElement.requestFullscreen();
+          this.isFullscreen = true;
+        } else {
+          if (document.fullscreenElement) {
+            await document.exitFullscreen();
+            this.isFullscreen = false;
+          }
+        }
+      } catch (error) {
+        console.error("Fullscreen error:", error);
+      }
+    },
+    onFullscreenChange() {
+      this.isFullscreen = !!document.fullscreenElement;
+    },
+  },
+};
 </script>

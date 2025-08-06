@@ -1,12 +1,12 @@
 <template>
-   <div class="h-screen flex flex-col">
+  <div class="h-screen flex flex-col">
     <!-- ✅ NAVBAR -->
-    <navbar v-if="!isLoginPage"/>
+    <Navbar @toggle-sidebar="toggleSidebar" v-if="!isLoginPage" />
 
     <!-- ✅ SIDEBAR + PAGE CONTENT -->
     <div class="flex flex-1">
-      <sidebar  v-if="!isLoginPage"/>
-      <main class="flex-1 p-6 bg-gray-100 overflow-auto">
+      <Sidebar :isOpen="sidebarOpen" @toggle-sidebar="toggleSidebar" v-if="!isLoginPage" />
+      <main class="flex-1 p-6 bg-gray-100 overflow-auto pt-28">
         <router-view />
       </main>
     </div>
@@ -14,23 +14,27 @@
 </template>
 
 <script>
-import sidebar from './components/sidebar.vue'
-import navbar from './components/navbar.vue'
+import Sidebar from './components/sidebar.vue'
+import Navbar from './components/navbar.vue'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
-
+import { computed, ref } from 'vue'
 
 export default {
   components: {
-    sidebar, navbar
+    Sidebar,
+    Navbar
   },
-
-   setup() {
+  setup() {
     const route = useRoute()
+    const sidebarOpen = ref(false) // 👈 default closed on mobile
+
+    const toggleSidebar = () => {
+      sidebarOpen.value = !sidebarOpen.value
+    }
 
     const isLoginPage = computed(() => route.path === '/login')
 
-    return { isLoginPage }
+    return { isLoginPage, sidebarOpen, toggleSidebar }
   }
 }
 </script>

@@ -1,13 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import input from '../views/input.vue'
-import RegisterView from '../views/RegisterView.vue'
-import BaseCard from '../views/BaseCard.vue'
-import DynamicTabs from '../views/DynamicTabs.vue'
 import login from '../views/login.vue'
-import Datepicker from '../views/Datepicker.vue'
-import tables from '../views/tables.vue'
-import form from '../views/form.vue'
+import BlogReader from '../views/BlogReader.vue'
+import StudentResults from '../views/StudentResults.vue'
+import BookLibrary from '../views/BookLibrary.vue'
+import ExpenseTracker from '../views/ExpenseTracker.vue'
+import TaskTracker from '../views/TaskTracker.vue'
+import MemberManager from '../views/MemberManager.vue'
+import WeatherApp from '../views/WeatherApp.vue'
+import QuizApp from '../views/QuizApp.vue'
+
 
 
 const routes = [
@@ -16,31 +17,6 @@ const routes = [
     redirect: '/login' ,
   
   },
-  {
-    path: '/Home',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/input',
-    name: 'input',
-    component: input
-  },
-  {
-    path: '/RegisterView',
-    name: 'RegisterView',
-    component: RegisterView
-  },
-  {
-    path: '/BaseCard',
-    name: 'BaseCard',
-    component: BaseCard
-  },
-  {
-    path: '/DynamicTabs',
-    name: 'DynamicTabs',
-    component: DynamicTabs
-  },
   
   {
     path: '/login',
@@ -48,20 +24,47 @@ const routes = [
     component: login
   },
   {
-    path: '/Datepicker',
-    name: 'Datepicker',
-    component: Datepicker
+    path: '/BlogReader',
+    name: 'BlogReader',
+    component: BlogReader
   },
   {
-    path: '/tables',
-    name: 'tables',
-    component: tables
+    path: '/StudentResults',
+    name: 'StudentResults',
+    component: StudentResults
   },
   {
-    path: '/form',
-    name: 'form',
-    component: form
+    path: '/BookLibrary',
+    name: 'BookLibrary',
+    component: BookLibrary
   },
+  {
+    path: '/ExpenseTracker',
+    name: 'ExpenseTracker',
+    component: ExpenseTracker
+  },
+  {
+    path: '/TaskTracker',
+    name: 'TaskTracker',
+    component: TaskTracker
+  },
+  {
+    path: '/MemberManager',
+    name: 'MemberManager',
+    component: MemberManager
+  },
+  {
+    path: '/WeatherApp',
+    name: 'WeatherApp',
+    component: WeatherApp
+  },
+  {
+    path: '/QuizApp',
+    name: 'QuizApp',
+    component: QuizApp
+  },
+
+
  
 ]
 
