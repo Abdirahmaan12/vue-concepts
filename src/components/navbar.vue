@@ -46,7 +46,7 @@
         <img
           src="../assets/logo.jpeg"
           alt="Profile"
-          class="mr-4 w-9 h-9 rounded-full border-2 border-[#2d527c] object-cover cursor-pointer"
+          class="lg:ml-2 md:ml-3 ml-6 w-9 h-9  rounded-full border-2 border-[#2d527c] object-cover cursor-pointer"
           @click="toggleMenu"
         />
 
